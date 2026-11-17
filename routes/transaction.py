@@ -60,7 +60,7 @@ async def create_transaction(data: TransactionCreate, bg: BackgroundTasks):
     # 1. Validasi: resource harus terdaftar
     motor = await db.get_motor(data.motor_id)
     if not motor:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak dmotorukan")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak ditemukan")
 
     # 2. Potong stok (dilindungi lock). Gagal -> 409 Conflict
     potong = potong_stok_dengan_lock if USE_LOCK else potong_stok_tanpa_lock
@@ -88,5 +88,5 @@ async def list_transactions(
 async def get_transaction(trx_id: int):
     trx = await db.get_transaction(trx_id)
     if not trx:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Transaksi tidak dmotorukan")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Transaksi tidak ditemukan")
     return trx

@@ -17,7 +17,7 @@ async def list_motors(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1, l
 async def get_motor(motor_id: int):
     motor = await db.get_motor(motor_id)
     if not motor:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak dmotorukan")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak ditemukan")
     return motor
 
 
@@ -31,7 +31,7 @@ async def create_motor(data: MotorCreate):
 async def update_motor(motor_id: int, data: MotorUpdate):
     ok = await db.update_motor(motor_id, data.nama, data.merk, data.kategori, data.harga_sewa, data.stok)
     if not ok:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak dmotorukan")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak ditemukan")
     return await db.get_motor(motor_id)
 
 
@@ -39,5 +39,5 @@ async def update_motor(motor_id: int, data: MotorUpdate):
 async def delete_motor(motor_id: int):
     ok = await db.delete_motor(motor_id)  # hard delete
     if not ok:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak dmotorukan")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Motor tidak ditemukan")
     return {"message": f"Motor {motor_id} dihapus permanen"}
