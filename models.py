@@ -19,9 +19,15 @@ class MotorUpdate(MotorBase):
     pass
 
 
-class MotorOut(MotorBase):
+class MotorOut(BaseModel):
+    # Tanpa batas ge=0: respons harus bisa menampilkan stok apa adanya
+    # (termasuk nilai minus saat demonstrasi race condition tanpa lock)
     id: int
-
+    nama: str
+    merk: str
+    kategori: str
+    harga_sewa: float
+    stok: int
 
 class TransactionCreate(BaseModel):
     motor_id: int = Field(..., gt=0)
